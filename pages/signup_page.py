@@ -6,51 +6,51 @@ from browser import Browser
 
 class SignupPage(Browser):
 
-    SIGNUP_BUTTON = (By.CSS_SELECTOR, '.jss17.jss49')
+    SIGNUP_BUTTON = (By.XPATH, '//a[normalize-space()="Sign up."]')
     PERSONAL_BUTTON = (By.XPATH, '//input[@value="personal"]')
-    BUSINESS_BUTTON = (By.CSS_SELECTOR, 'input[value="business"]')
-    CONTINUE_BUTTON = (By.CSS_SELECTOR, '.MuiButtonBase-root.MuiButton-root.MuiButton-contained.jss15.jss39')
+    BUSINESS_BUTTON = (By.XPATH, '//input[@value="business"]')
+    CONTINUE_BUTTON = (By.XPATH, '//span[normalize-space()="CONTINUE"]')
     INPUT_NAME = (By.XPATH, '//input[@placeholder="Type your answer here..."]')
-    ERROR_MESSAGE = (By.CSS_SELECTOR, '.MuiFormHelperText-root.MuiFormHelperText-contained.MuiFormHelperText-filled')
+    ERROR_MESSAGE = (By.CSS_SELECTOR, 'p')
     BETWEEN_8AND72_CHARACTERS_NOTIFICATION = (By.XPATH, '//span[normalize-space()="Between 8 and 72 characters"]')
     UPPERCASE_NOTIFICATION = (By.XPATH, '//span[normalize-space()="Uppercase characters"]')
     LOWERCASE_NOTIFICATION = (By.XPATH, '//span[normalize-space()="Lowercase characters"]')
     NUMBERS_NOTIFICATION = (By.XPATH, '//span[normalize-space()="Numbers"]')
     SPECIAL_CHARACTERS_NOTIFICATION = (By.XPATH, '//span[normalize-space()="Special characters"]')
 
-    def click_signup_btn(self):
+    def click_signup(self):
         self.driver.find_element(*self.SIGNUP_BUTTON).click()
 
-    def click_personal_btn(self):
+    def click_personal(self):
         self.driver.find_element(*self.PERSONAL_BUTTON).click()
 
-    def clic_business(self):
+    def click_business(self):
         self.driver.find_element(*self.BUSINESS_BUTTON).click()
 
 
-    def click_continue_btn(self):
+    def click_continue1(self):
         self.driver.find_element(*self.CONTINUE_BUTTON).click()
         sleep(2)
 
-    def input_first_name(self, name):
+    def set_firstName(self, name):
         self.driver.find_element(*self.INPUT_NAME).send_keys(name)
 
-    def display_error_message(self, expected_message):
-        sleep(2)
+    def display_error(self, expected_message):
         try:
             actual_message = self.driver.find_element(*self.ERROR_MESSAGE).text
         except NoSuchElementException:
             actual_message = 'None'
 
-        assert expected_message == actual_message,\
+        assert actual_message == expected_message, \
             f'Error message is incorrect, expected: {expected_message}, actual: {actual_message}'
+        sleep(2)
 
-    def clear_name_input(self, name):
+    def clear_nameInput(self, name):
         self.driver.find_element(*self.INPUT_NAME).send_keys(Keys.BACKSPACE*len(name))
         sleep(2)
 
-    def error_message_not_displayed(self):
-        sleep(2)
+    def error_notDisplayed(self):
+        sleep(1)
         try:
             actual = self.driver.find_element(*self.ERROR_MESSAGE).is_displayed()
             expected = False
@@ -60,6 +60,7 @@ class SignupPage(Browser):
 
         assert actual == expected, \
             f'Error message is displayed, actual: {actual}, expected: {expected}'
+
 
     def between_notification(self):
         sleep(2)

@@ -1,36 +1,39 @@
 from behave import *
 
+@when('base: I click the "Sign up." button')
+def step_impl(context):
+    context.signup_page.click_signup()
 @when('signup: I click on "PERSONAL" button')
 def step_impl(context):
-    context.signup_page.click_personal_btn()
+    context.signup_page.click_personal()
 
 @when('signup: I click on "Continue" button')
 def step_impl(context):
-    context.signup_page.click_continue_btn()
+    context.signup_page.click_continue1()
 
 @when('signup: I fill the name input with value "{name}"')
 def step_impl(context, name):
-    context.signup_page.input_first_name(name)
+    context.signup_page.set_firstName(name)
 
-@then('signup: Error message is displayed with the error message: {error_message}')
-def step_impl(context, error_message):
-    context.signup_page.display_error_message(error_message)
+@then('signup: Error message is displayed with the error message "{expected_message}"')
+def step_impl(context, expected_message):
+    context.signup_page.display_error(expected_message)
 
 @when('signup: I clear the name input which was "{name}"')
 def step_impl(context, name):
-    context.signup_page.clear_name_input(name)
+    context.signup_page.clear_nameInput(name)
 
 @when('signup: I click on "BUSINESS" button')
 def step_impl(context):
-    context.signup_page.click_business_button()
+    context.signup_page.click_business()
 
 @then('signup: Error message is not displayed anymore')
 def step_impl(context):
-    context.signup_page.error_message_not_displayed()
+    context.signup_page.error_notDisplayed()
 
 @then('signup: Continue button is disabled')
 def step_impl(context):
-    context.signup_page.cotinue_button_enabled()
+    context.signup_page.continue_buttonEnabled()
 
 @then('signup: Between 8 and 72 characters notification is displayed')
 def step_impl(context):
@@ -50,4 +53,4 @@ def step_impl(context):
 
 @then('signup: Special characters notification is displayed')
 def step_impl(context):
-    context.signup_page.special_notification()
+    context.signup_page.special_characters_notification()
